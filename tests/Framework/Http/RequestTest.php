@@ -5,25 +5,23 @@
 
 use Framework\Http\Request;
 
-class RequestTest extends PHPUnit\Framework\TestCase
-{
-    public function testEmpty() {
-        $_GET = [];
+class RequestTest extends PHPUnit\Framework\TestCase {
 
-        $request = new Request();
-        $this->assertEquals([], $request->getQueryParams());
+    public function testEmpty() {
+        $request = (new Request)->setGet([]);
+        $this->assertEquals([], $request->get());
     }
 
     public function testGetQueryParams() {
+
         $_GET = [
             'test1' => 1,
             'test2' => 2,
         ];
 
-        $expected = $_GET;
+        $request = (new Request())->setGet($_GET);
 
-        $request = new Request();
-        $this->assertEquals($expected, $request->getQueryParams());
+        $this->assertEquals($_GET, $request->get());
     }
 
     public function testGetQueryParamByName() {
@@ -31,8 +29,20 @@ class RequestTest extends PHPUnit\Framework\TestCase
             'test1' => 1,
         ];
 
-        $request = new Request();
+        $request = (new Request())->setGet($_GET);
+
         $this->assertEquals(1, $request->getQueryParamByName('test1'));
         $this->assertNull($request->getQueryParamByName('test2'));
+    }
+
+    public function testGetQueryParamsImmutability() {
+        $_GET = ['test1' => 1];
+
+        $request = (new Request())->setGet($_GET);
+
+        $_GET = ['test1' => 100];
+
+        $this->assertEquals(1, $request->getQueryParamByName('test1'));
+
     }
 }

@@ -5,6 +5,8 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$Request = new Framework\Http\Request();
-var_dump($Request->getQueryParams());
+use Framework\Http;
+
+$Request = Http\RequestFactory::initRequest();
+var_dump($Request->get());
 die;
