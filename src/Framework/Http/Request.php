@@ -22,7 +22,7 @@ class Request {
         return $this->_get;
     }
 
-    public function setGet(array $get): Request
+    public function setGet(array $get): self
     {
         $new = clone $this;
         $new->_get = $get;
@@ -34,7 +34,7 @@ class Request {
         return $this->_post;
     }
 
-    public function setPost(array $post): Request
+    public function setPost(array $post): self
     {
         $new = clone $this;
         $new->_post = $post;
